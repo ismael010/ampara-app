@@ -19,6 +19,8 @@ import LeadsPage from './pages/LeadsPage'
 import FamiliasPage from './pages/FamiliasPage'
 import QuejasPage from './pages/QuejasPage'
 import ProyectosPage from './pages/ProyectosPage'
+import JuegoPage from './pages/JuegoPage'
+import CrearQuejaPage from './pages/CrearQuejaPage'
 
 export default function App() {
   return (
@@ -41,7 +43,9 @@ export default function App() {
       <Route path="/leads" element={<ProtectedRoute><LeadsPage /></ProtectedRoute>} />
       <Route path="/familias" element={<ProtectedRoute><FamiliasPage /></ProtectedRoute>} />
       <Route path="/quejas" element={<ProtectedRoute><QuejasPage /></ProtectedRoute>} />
+      <Route path="/crear-queja" element={<ProtectedRoute><CrearQuejaPage /></ProtectedRoute>} />
       <Route path="/proyectos" element={<ProtectedRoute><ProyectosPage /></ProtectedRoute>} />
+      <Route path="/juego" element={<ProtectedRoute><JuegoPage /></ProtectedRoute>} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   )
