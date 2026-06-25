@@ -15,6 +15,9 @@ const CONVIVENCIA = [
   { id: 'pareja', label: 'Con mi pareja' },
   { id: 'hijos', label: 'Con hijos menores de 18' },
   { id: 'mayores', label: 'Con adultos mayores' },
+  { id: 'hermanos', label: 'Con hermano/s' },
+  { id: 'roomate', label: 'Con roomate' },
+  { id: 'otros', label: 'Otros' },
 ]
 
 export default function OnboardingPage() {

@@ -55,7 +55,7 @@ export default function SeleccionRolPage() {
         <div className="text-center mb-8">
           <h1 className="text-2xl font-bold text-gray-800">¿Quién eres?</h1>
           <p className="text-sm text-gray-500 mt-1">
-            Así te mostramos solo lo que te sirve
+            Así te mostramos lo mas adecuado a tu situacion
           </p>
         </div>
 

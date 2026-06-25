@@ -4,6 +4,7 @@ import { useMascota } from '../hooks/useMascota'
 import BottomNav from '../components/BottomNav'
 import Icon from '../components/ui/Icon'
 import TourSpotlight from '../components/TourSpotlight'
+import { renderConLinks } from '../utils/renderConLinks'
 
 const SYSTEM_PROMPT = `Eres el asistente de Ampara, una app chilena que ayuda a familias a preparar sus documentos para postular a subsidios habitacionales del gobierno de Chile.
 
@@ -114,14 +115,28 @@ export default function AsistentePage() {
                 </div>
               )}
               <div
-                className={`max-w-[80%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${
-                  m.role === 'user'
-                    ? 'bg-brand-600 text-white rounded-tr-sm'
-                    : 'bg-white text-gray-800 shadow-sm rounded-tl-sm'
-                }`}
-              >
-                {m.content}
-              </div>
+  className={`max-w-[80%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${
+    m.role === 'user'
+      ? 'bg-brand-600 text-white rounded-tr-sm'
+      : 'bg-white text-gray-800 shadow-sm rounded-tl-sm'
+  }`}
+>
+  {renderConLinks(m.content).map((parte) =>
+    parte.tipo === 'link' ? (
+      <a
+        key={parte.key}
+        href={parte.valor}
+        target="_blank"
+        rel="noreferrer"
+        className={`underline ${m.role === 'user' ? 'text-white' : 'text-brand-600'}`}
+      >
+        {parte.valor}
+      </a>
+    ) : (
+      <span key={parte.key}>{parte.valor}</span>
+    )
+  )}
+</div>
             </div>
           ))}
 
