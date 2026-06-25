@@ -52,7 +52,7 @@ export default function OnboardingPage() {
     setLoading(true)
     try {
       await createProfile(user.uid, form)
-      navigate('/home')
+      navigate('/elegir-mascota')
     } catch (err) {
       console.error(err)
     } finally {
@@ -61,8 +61,8 @@ export default function OnboardingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-emerald-50 flex items-center justify-center px-4 py-8">
-      <div className="w-full max-w-sm bg-white rounded-2xl shadow-md p-8">
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-8">
+      <div className="w-full max-w-sm bg-white rounded-card shadow-md p-8">
 
         {/* Progreso */}
         <div className="flex items-center gap-2 mb-6">
@@ -70,7 +70,7 @@ export default function OnboardingPage() {
             <div
               key={s}
               className={`h-2 flex-1 rounded-full transition-all ${
-                s <= step ? 'bg-emerald-500' : 'bg-gray-200'
+                s <= step ? 'bg-brand-600' : 'bg-gray-200'
               }`}
             />
           ))}
@@ -91,7 +91,7 @@ export default function OnboardingPage() {
                 value={form.name}
                 onChange={(e) => update('name', e.target.value)}
                 placeholder="Rosa Fuentes"
-                className="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400"
+                className="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400"
               />
             </div>
 
@@ -104,8 +104,8 @@ export default function OnboardingPage() {
                     onClick={() => update('edad', op)}
                     className={`text-left px-4 py-3 rounded-xl border text-sm transition ${
                       form.edad === op
-                        ? 'border-emerald-500 bg-emerald-50 text-emerald-700 font-medium'
-                        : 'border-gray-200 hover:border-emerald-300'
+                        ? 'border-brand-600 bg-brand-50 text-brand-700 font-medium'
+                        : 'border-gray-200 hover:border-brand-200'
                     }`}
                   >
                     {op}
@@ -123,8 +123,8 @@ export default function OnboardingPage() {
                     onClick={() => update('vivienda', op)}
                     className={`text-left px-4 py-3 rounded-xl border text-sm transition ${
                       form.vivienda === op
-                        ? 'border-emerald-500 bg-emerald-50 text-emerald-700 font-medium'
-                        : 'border-gray-200 hover:border-emerald-300'
+                        ? 'border-brand-600 bg-brand-50 text-brand-700 font-medium'
+                        : 'border-gray-200 hover:border-brand-200'
                     }`}
                   >
                     {op}
@@ -136,7 +136,7 @@ export default function OnboardingPage() {
             <button
               onClick={() => setStep(2)}
               disabled={!form.name || !form.edad || !form.vivienda}
-              className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl py-3 text-sm transition disabled:opacity-40"
+              className="w-full bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-xl py-3 text-sm transition disabled:opacity-40"
             >
               Siguiente →
             </button>
@@ -160,8 +160,8 @@ export default function OnboardingPage() {
                     onClick={() => toggleConvivencia(id)}
                     className={`text-left px-4 py-3 rounded-xl border text-sm transition ${
                       form.convivencia.includes(id)
-                        ? 'border-emerald-500 bg-emerald-50 text-emerald-700 font-medium'
-                        : 'border-gray-200 hover:border-emerald-300'
+                        ? 'border-brand-600 bg-brand-50 text-brand-700 font-medium'
+                        : 'border-gray-200 hover:border-brand-200'
                     }`}
                   >
                     {label}
@@ -175,7 +175,7 @@ export default function OnboardingPage() {
               <select
                 value={form.region}
                 onChange={(e) => update('region', e.target.value)}
-                className="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400"
+                className="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400"
               >
                 <option value="">Selecciona tu región</option>
                 {REGIONES.map((r) => (
@@ -193,8 +193,8 @@ export default function OnboardingPage() {
                     onClick={() => update('danio', op)}
                     className={`text-left px-4 py-3 rounded-xl border text-sm transition ${
                       form.danio === op
-                        ? 'border-emerald-500 bg-emerald-50 text-emerald-700 font-medium'
-                        : 'border-gray-200 hover:border-emerald-300'
+                        ? 'border-brand-600 bg-brand-50 text-brand-700 font-medium'
+                        : 'border-gray-200 hover:border-brand-200'
                     }`}
                   >
                     {op}
@@ -213,7 +213,7 @@ export default function OnboardingPage() {
               <button
                 onClick={() => setStep(3)}
                 disabled={!form.region || !form.danio}
-                className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl py-3 text-sm transition disabled:opacity-40"
+                className="flex-1 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-xl py-3 text-sm transition disabled:opacity-40"
               >
                 Siguiente →
               </button>
@@ -238,8 +238,8 @@ export default function OnboardingPage() {
                     onClick={() => update('educacion', op)}
                     className={`text-left px-4 py-3 rounded-xl border text-sm transition ${
                       form.educacion === op
-                        ? 'border-emerald-500 bg-emerald-50 text-emerald-700 font-medium'
-                        : 'border-gray-200 hover:border-emerald-300'
+                        ? 'border-brand-600 bg-brand-50 text-brand-700 font-medium'
+                        : 'border-gray-200 hover:border-brand-200'
                     }`}
                   >
                     {op}
@@ -263,8 +263,8 @@ export default function OnboardingPage() {
                     onClick={() => update('ingresos', op)}
                     className={`text-left px-4 py-3 rounded-xl border text-sm transition ${
                       form.ingresos === op
-                        ? 'border-emerald-500 bg-emerald-50 text-emerald-700 font-medium'
-                        : 'border-gray-200 hover:border-emerald-300'
+                        ? 'border-brand-600 bg-brand-50 text-brand-700 font-medium'
+                        : 'border-gray-200 hover:border-brand-200'
                     }`}
                   >
                     {op}
@@ -283,7 +283,7 @@ export default function OnboardingPage() {
               <button
                 onClick={handleFinish}
                 disabled={!form.educacion || !form.ingresos || loading}
-                className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl py-3 text-sm transition disabled:opacity-40"
+                className="flex-1 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-xl py-3 text-sm transition disabled:opacity-40"
               >
                 {loading ? 'Guardando...' : '¡Ver Ampara! →'}
               </button>

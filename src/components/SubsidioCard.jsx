@@ -3,17 +3,11 @@ import { useNavigate } from 'react-router-dom'
 import { calcularMatch } from '../utils/calcularMatch'
 import { CATALOGO } from '../data/documentosCatalogo'
 import { useSeguimiento } from '../hooks/useSeguimiento'
+import Icon from './ui/Icon'
 
 const NOMBRES_DOC = Object.fromEntries(
   CATALOGO.flatMap((c) => c.docs).map((d) => [d.id, d.nombre])
 )
-
-const NOMBRES_PERFIL = {
-  vivienda: 'situación de vivienda',
-  danio: 'daño en vivienda',
-  ingresos: 'rango de ingresos',
-  edad: 'rango de edad',
-}
 
 export default function SubsidioCard({ subsidio, perfil, documentos }) {
   const [expandido, setExpandido] = useState(false)
@@ -22,10 +16,7 @@ export default function SubsidioCard({ subsidio, perfil, documentos }) {
   const { seguimientos, iniciarSeguimiento } = useSeguimiento()
   const navigate = useNavigate()
 
-  const colorBarra =
-    porcentaje === 100 ? 'bg-emerald-500' :
-    porcentaje >= 60 ? 'bg-yellow-400' : 'bg-red-400'
-
+  const completo = porcentaje === 100
   const tieneSeguimiento = seguimientos.some((s) => s.id === subsidio.id)
 
   const handleSeguimiento = async () => {
@@ -40,7 +31,7 @@ export default function SubsidioCard({ subsidio, perfil, documentos }) {
   }
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm p-4 mb-3">
+    <div className="bg-white rounded-card shadow-sm p-4 mb-3">
       {/* Header */}
       <div className="flex justify-between items-start mb-2">
         <div className="flex-1 pr-3">
@@ -48,8 +39,7 @@ export default function SubsidioCard({ subsidio, perfil, documentos }) {
           <p className="text-xs text-gray-500 mt-0.5">{subsidio.descripcion}</p>
         </div>
         <span className={`text-sm font-bold shrink-0 ${
-          porcentaje === 100 ? 'text-emerald-600' :
-          porcentaje >= 60 ? 'text-yellow-600' : 'text-red-500'
+          completo ? 'text-success-600' : 'text-warning-600'
         }`}>
           {porcentaje}%
         </span>
@@ -58,7 +48,9 @@ export default function SubsidioCard({ subsidio, perfil, documentos }) {
       {/* Barra de match */}
       <div className="bg-gray-100 rounded-full h-2 mb-3">
         <div
-          className={`${colorBarra} rounded-full h-2 transition-all`}
+          className={`rounded-full h-2 transition-all ${
+            completo ? 'bg-success-600' : 'bg-warning-600'
+          }`}
           style={{ width: `${porcentaje}%` }}
         />
       </div>
@@ -70,11 +62,12 @@ export default function SubsidioCard({ subsidio, perfil, documentos }) {
           return (
             <span
               key={docId}
-              className={`text-xs px-2 py-0.5 rounded-full ${
-                ok ? 'bg-emerald-50 text-emerald-700' : 'bg-red-50 text-red-500'
+              className={`text-xs px-2 py-0.5 rounded-full flex items-center gap-1 ${
+                ok ? 'bg-success-50 text-success-700' : 'bg-warning-50 text-warning-700'
               }`}
             >
-              {ok ? '✓' : '✗'} {NOMBRES_DOC[docId] || docId}
+              <Icon name={ok ? 'check' : 'close'} size={12} />
+              {NOMBRES_DOC[docId] || docId}
             </span>
           )
         })}
@@ -86,27 +79,27 @@ export default function SubsidioCard({ subsidio, perfil, documentos }) {
           className="cursor-pointer mb-3"
           onClick={() => setExpandido(!expandido)}
         >
-          <p className="text-xs text-emerald-600 font-medium">
-            {expandido ? '▲ Ocultar detalles' : '▼ Ver qué falta para el 100%'}
+          <p className="text-xs text-warning-700 font-medium flex items-center gap-1">
+            <Icon name={expandido ? 'expand_less' : 'expand_more'} size={16} />
+            Falta{faltantes.length > 1 ? 'n' : ''} {faltantes.length} para completar
           </p>
 
           {expandido && (
-            <div className="mt-2 bg-amber-50 rounded-xl p-3 space-y-1">
+            <div className="mt-2 bg-warning-50 rounded-card p-3 flex flex-wrap gap-1">
               {faltantes.map((f, i) => (
-                <p key={i} className="text-xs text-amber-800">
-                  {f.tipo === 'doc'
-                    ? `📄 Subir: ${NOMBRES_DOC[f.id] || f.id}`
-                    : `👤 Tu ${NOMBRES_PERFIL[f.id] || f.id} no califica`}
-                </p>
+                <span key={i} className="text-xs text-warning-700 bg-warning-100 rounded-full px-2 py-0.5">
+                  {f.tipo === 'doc' ? NOMBRES_DOC[f.id] || f.id : 'Perfil'}
+                </span>
               ))}
             </div>
           )}
         </div>
       )}
 
-      {porcentaje === 100 && (
-        <p className="text-xs text-emerald-600 font-medium mb-3">
-          ✅ Listo para postular
+      {completo && (
+        <p className="text-xs text-success-600 font-medium mb-3 flex items-center gap-1">
+          <Icon name="check_circle" size={14} />
+          Listo para postular
         </p>
       )}
 
@@ -114,14 +107,25 @@ export default function SubsidioCard({ subsidio, perfil, documentos }) {
       <button
         onClick={handleSeguimiento}
         disabled={iniciando}
-        className={`w-full text-sm rounded-xl py-2.5 font-medium transition disabled:opacity-40 ${
+        className={`w-full text-sm rounded-button py-2.5 font-medium transition disabled:opacity-40 flex items-center justify-center gap-1.5 ${
           tieneSeguimiento
-            ? 'bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100'
-            : 'bg-emerald-600 text-white hover:bg-emerald-700'
+            ? 'bg-brand-50 text-brand-700 border border-brand-200 hover:bg-brand-100'
+            : 'bg-brand-600 text-white hover:bg-brand-700'
         }`}
       >
-        {iniciando ? 'Iniciando...' :
-         tieneSeguimiento ? '📍 Ver seguimiento →' : '+ Iniciar seguimiento'}
+        {iniciando ? (
+          'Iniciando...'
+        ) : tieneSeguimiento ? (
+          <>
+            <Icon name="location_on" size={16} />
+            Ver seguimiento
+          </>
+        ) : (
+          <>
+            <Icon name="add" size={16} />
+            Iniciar seguimiento
+          </>
+        )}
       </button>
     </div>
   )

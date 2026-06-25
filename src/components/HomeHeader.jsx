@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom'
+import Icon from './ui/Icon'
 
 export default function HomeHeader({ profile }) {
   const navigate = useNavigate()
@@ -15,10 +16,10 @@ export default function HomeHeader({ profile }) {
       </div>
       <button
         onClick={() => navigate('/perfil')}
-        className="flex items-center gap-1 bg-emerald-50 border border-emerald-200 rounded-full px-3 py-1.5"
+        className="flex items-center gap-1 bg-brand-50 border border-brand-200 rounded-full px-3 py-1.5"
       >
-        <span className="text-base">🪙</span>
-        <span className="text-sm font-bold text-emerald-700">
+        <Icon name="monetization_on" size={18} className="text-brand-600" />
+        <span className="text-sm font-bold text-brand-700">
           {profile?.fichas ?? 0}
         </span>
       </button>

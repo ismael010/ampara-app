@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react'
 import { getSemaforo } from '../utils/semaforo'
+import Icon from './ui/Icon'
 
 export default function DocumentoItem({ docId, nombre, tieneVencimiento, data, onSubir }) {
   const inputRef = useRef()
@@ -15,15 +16,12 @@ export default function DocumentoItem({ docId, nombre, tieneVencimiento, data, o
     if (!file) return
 
     if (tieneVencimiento) {
-      // Guardamos el archivo y pedimos la fecha antes de subir
       setArchivoTemporal(file)
       setMostrarFecha(true)
     } else {
-      // Sin vencimiento, subimos directo
       subirArchivo(file, null)
     }
 
-    // Limpiamos el input para que onChange se dispare la próxima vez
     e.target.value = ''
   }
 
@@ -46,17 +44,30 @@ export default function DocumentoItem({ docId, nombre, tieneVencimiento, data, o
       <div className="flex items-center justify-between">
         <div>
           <p className="text-sm font-medium text-gray-800">{nombre}</p>
+
           {data?.subido && semaforo && (
-            <p className={`text-xs mt-0.5 ${
-              semaforo.color === 'rojo' ? 'text-red-500' :
-              semaforo.color === 'amarillo' ? 'text-yellow-600' : 'text-emerald-600'
+            <p className={`text-xs mt-0.5 flex items-center gap-1 ${
+              semaforo.color === 'rojo' ? 'text-warning-700' :
+              semaforo.color === 'amarillo' ? 'text-warning-600' : 'text-success-600'
             }`}>
-              {semaforo.label}
+              <Icon
+                name={
+                  semaforo.color === 'rojo' ? 'error' :
+                  semaforo.color === 'amarillo' ? 'warning' : 'check_circle'
+                }
+                size={14}
+              />
+              {semaforo.label.replace('🔴', '').replace('🟡', '').replace('✅', '').trim()}
             </p>
           )}
+
           {data?.subido && !semaforo && (
-            <p className="text-xs text-emerald-600 mt-0.5">Sin venc. ✓</p>
+            <p className="text-xs text-success-600 mt-0.5 flex items-center gap-1">
+              <Icon name="check_circle" size={14} />
+              Sin vencimiento
+            </p>
           )}
+
           {!data?.subido && (
             <p className="text-xs text-gray-400 mt-0.5">No subido</p>
           )}
@@ -65,13 +76,25 @@ export default function DocumentoItem({ docId, nombre, tieneVencimiento, data, o
         <button
           onClick={() => inputRef.current.click()}
           disabled={uploading}
-          className={`text-xs px-3 py-1.5 rounded-lg font-medium transition ${
+          className={`text-xs px-3 py-1.5 rounded-button font-medium transition flex items-center gap-1 ${
             data?.subido
               ? 'bg-gray-100 text-gray-500 hover:bg-gray-200'
-              : 'bg-emerald-600 text-white hover:bg-emerald-700'
+              : 'bg-brand-600 text-white hover:bg-brand-700'
           }`}
         >
-          {uploading ? '...' : data?.subido ? 'Renovar' : 'Subir'}
+          {uploading ? (
+            '...'
+          ) : data?.subido ? (
+            <>
+              <Icon name="autorenew" size={14} />
+              Renovar
+            </>
+          ) : (
+            <>
+              <Icon name="upload" size={14} />
+              Subir
+            </>
+          )}
         </button>
 
         <input
@@ -84,7 +107,7 @@ export default function DocumentoItem({ docId, nombre, tieneVencimiento, data, o
       </div>
 
       {mostrarFecha && (
-        <div className="bg-emerald-50 rounded-xl p-3 flex flex-col gap-2">
+        <div className="bg-brand-50 rounded-card p-3 flex flex-col gap-2">
           <p className="text-xs text-gray-600 font-medium">
             ¿Cuándo vence este documento?
           </p>
@@ -92,14 +115,19 @@ export default function DocumentoItem({ docId, nombre, tieneVencimiento, data, o
             type="date"
             value={vencimiento}
             onChange={(e) => setVencimiento(e.target.value)}
-            className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400"
+            className="border border-gray-300 rounded-button px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400"
           />
           <button
             onClick={handleConfirmarFecha}
             disabled={!vencimiento || uploading}
-            className="bg-emerald-600 text-white text-xs rounded-lg py-2 font-medium disabled:opacity-40"
+            className="bg-brand-600 text-white text-xs rounded-button py-2 font-medium disabled:opacity-40 flex items-center justify-center gap-1"
           >
-            {uploading ? 'Subiendo...' : 'Confirmar y subir →'}
+            {uploading ? 'Subiendo...' : (
+              <>
+                <Icon name="check" size={14} />
+                Confirmar y subir
+              </>
+            )}
           </button>
         </div>
       )}

@@ -1,16 +1,28 @@
 import { doc, setDoc, getDoc } from 'firebase/firestore'
 import { db } from '../firebase/config'
+import { auth } from '../firebase/config'
 
 export function useUserProfile() {
   const createProfile = async (uid, profileData) => {
-    await setDoc(doc(db, 'users', uid), {
+    await setDoc(doc(db, 'perfilesFamilia', uid), {
       ...profileData,
-      fichas: 0,
-      racha: 0,
-      avatar: 'cobi',
+      updatedAt: new Date(),
+    }, { merge: true })
+
+    const userSnap = await getDoc(doc(db, 'users', uid))
+    const yaExiste = userSnap.exists() && userSnap.data().fichas !== undefined
+
+    await setDoc(doc(db, 'users', uid), {
+      name: profileData.name || '',
+      email: auth.currentUser?.email || '',
       completedOnboarding: true,
-      createdAt: new Date()
-    })
+      rolesCompletados: { familia: true },
+      ...(!yaExiste && { fichas: 0, racha: 0, avatar: 'cobi' }),
+    }, { merge: true })
+  }
+
+  const setRole = async (uid, role) => {
+    await setDoc(doc(db, 'users', uid), { role }, { merge: true })
   }
 
   const getProfile = async (uid) => {
@@ -18,5 +30,5 @@ export function useUserProfile() {
     return snap.exists() ? snap.data() : null
   }
 
-  return { createProfile, getProfile }
+  return { createProfile, setRole, getProfile }
 }

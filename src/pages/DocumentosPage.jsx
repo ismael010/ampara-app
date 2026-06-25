@@ -12,7 +12,7 @@ export default function DocumentosPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <p className="text-emerald-600 font-medium">Cargando...</p>
+        <p className="text-brand-600 font-medium">Cargando...</p>
       </div>
     )
   }
@@ -30,14 +30,14 @@ export default function DocumentosPage() {
         </div>
 
         {/* Progreso general */}
-        <div className="bg-white rounded-2xl p-4 shadow-sm mb-5">
+        <div className="bg-white rounded-card p-4 shadow-sm mb-5">
           <div className="flex justify-between text-sm mb-2">
             <span className="text-gray-600 font-medium">Carpeta completa</span>
-            <span className="text-emerald-600 font-bold">{subidos}/{totalDocs}</span>
+            <span className="text-brand-600 font-bold">{subidos}/{totalDocs}</span>
           </div>
           <div className="bg-gray-100 rounded-full h-2">
             <div
-              className="bg-emerald-500 rounded-full h-2 transition-all"
+              className="bg-brand-600 rounded-full h-2 transition-all"
               style={{ width: `${(subidos / totalDocs) * 100}%` }}
             />
           </div>
@@ -48,7 +48,7 @@ export default function DocumentosPage() {
           const subidosEnCat = docs.filter((d) => documentos[d.id]?.subido).length
 
           return (
-            <div key={categoria} className="bg-white rounded-2xl shadow-sm mb-4 px-4 py-3">
+            <div key={categoria} className="bg-white rounded-card shadow-sm mb-4 px-4 py-3">
               <div className="flex justify-between items-center mb-1">
                 <h2 className="text-sm font-bold text-gray-700">{categoria}</h2>
                 <span className="text-xs text-gray-400">

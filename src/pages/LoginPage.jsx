@@ -13,43 +13,43 @@ export default function LoginPage() {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
-const handleLogin = async (e) => {
-  e.preventDefault()
-  setError('')
-  setLoading(true)
-  try {
-    const userCredential = await login(email, password)
-    await redirectAfterAuth(userCredential.user.uid)
-  } catch (err) {
-    setError('Correo o contraseña incorrectos')
-  } finally {
-    setLoading(false)
+  const handleLogin = async (e) => {
+    e.preventDefault()
+    setError('')
+    setLoading(true)
+    try {
+      const userCredential = await login(email, password)
+      await redirectAfterAuth(userCredential.user.uid)
+    } catch (err) {
+      setError('Correo o contraseña incorrectos')
+    } finally {
+      setLoading(false)
+    }
   }
-}
 
-const handleGoogle = async () => {
-  setError('')
-  try {
-    const result = await loginWithGoogle()
-    await redirectAfterAuth(result.user.uid)
-  } catch (err) {
-    setError('No se pudo iniciar con Google')
+  const handleGoogle = async () => {
+    setError('')
+    try {
+      const result = await loginWithGoogle()
+      await redirectAfterAuth(result.user.uid)
+    } catch (err) {
+      setError('No se pudo iniciar con Google')
+    }
   }
-}
 
   return (
-    <div className="min-h-screen bg-emerald-50 flex items-center justify-center px-4">
-      <div className="w-full max-w-sm bg-white rounded-2xl shadow-md p-8">
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
+      <div className="w-full max-w-sm bg-white rounded-card shadow-md p-8">
 
         {/* Logo */}
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-emerald-700">Ampara</h1>
+          <h1 className="text-3xl font-bold text-brand-700">Ampara</h1>
           <p className="text-sm text-gray-500 mt-1">Prepara tus documentos antes de la emergencia</p>
         </div>
 
         {/* Error */}
         {error && (
-          <div className="bg-red-50 text-red-600 text-sm rounded-lg px-4 py-3 mb-4">
+          <div className="bg-warning-50 text-warning-700 text-sm rounded-button px-4 py-3 mb-4">
             {error}
           </div>
         )}
@@ -66,7 +66,7 @@ const handleGoogle = async () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="tucorreo@email.com"
-              className="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400"
+              className="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400"
             />
           </div>
 
@@ -80,14 +80,14 @@ const handleGoogle = async () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
-              className="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400"
+              className="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400"
             />
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl py-3 text-sm transition disabled:opacity-50"
+            className="w-full bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-xl py-3 text-sm transition disabled:opacity-50"
           >
             {loading ? 'Ingresando...' : 'Ingresar →'}
           </button>
@@ -116,7 +116,7 @@ const handleGoogle = async () => {
         {/* Registro */}
         <p className="text-center text-sm text-gray-500 mt-6">
           ¿No tienes cuenta?{' '}
-          <Link to="/register" className="text-emerald-600 font-medium hover:underline">
+          <Link to="/register" className="text-brand-600 font-medium hover:underline">
             Crear cuenta
           </Link>
         </p>

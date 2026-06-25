@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react'
 import { ETAPAS } from '../data/etapasCatalogo'
+import Icon from './ui/Icon'
 
 export default function EtapaStepper({ seguimiento, onCompletar }) {
   const [uploadingEtapa, setUploadingEtapa] = useState(null)
@@ -29,27 +30,28 @@ export default function EtapaStepper({ seguimiento, onCompletar }) {
         return (
           <div
             key={n}
-            className={`rounded-2xl p-4 border transition ${
-              completada ? 'bg-emerald-50 border-emerald-200' :
-              esActual ? 'bg-white border-emerald-400 shadow-sm' :
+            className={`rounded-card p-4 border transition ${
+              completada ? 'bg-success-50 border-success-200' :
+              esActual ? 'bg-white border-brand-400 shadow-sm' :
               'bg-gray-50 border-gray-100 opacity-60'
             }`}
           >
             <div className="flex items-start gap-3">
               {/* Indicador */}
               <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm shrink-0 font-bold ${
-                completada ? 'bg-emerald-500 text-white' :
-                esActual ? 'bg-emerald-600 text-white' :
+                completada ? 'bg-success-600 text-white' :
+                esActual ? 'bg-brand-600 text-white' :
                 'bg-gray-200 text-gray-400'
               }`}>
-                {completada ? '✓' : n}
+                {completada ? <Icon name="check" size={16} /> : n}
               </div>
 
               <div className="flex-1">
-                <p className={`text-sm font-semibold ${
+                <p className={`text-sm font-semibold flex items-center gap-1.5 ${
                   esFutura ? 'text-gray-400' : 'text-gray-800'
                 }`}>
-                  {icono} {titulo}
+                  <Icon name={icono} size={16} />
+                  {titulo}
                 </p>
                 <p className="text-xs text-gray-500 mt-0.5">{descripcion}</p>
 
@@ -59,9 +61,10 @@ export default function EtapaStepper({ seguimiento, onCompletar }) {
                     href={etapa.comprobante}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-xs text-emerald-600 underline mt-1 block"
+                    className="text-xs text-success-700 underline mt-1 flex items-center gap-1"
                   >
-                    Ver comprobante →
+                    <Icon name="description" size={12} />
+                    Ver comprobante
                   </a>
                 )}
 
@@ -71,14 +74,15 @@ export default function EtapaStepper({ seguimiento, onCompletar }) {
                     <button
                       onClick={() => inputRefs.current[n]?.click()}
                       disabled={uploading}
-                      className="text-xs bg-emerald-600 text-white rounded-lg px-3 py-1.5 font-medium hover:bg-emerald-700 transition disabled:opacity-40"
+                      className="text-xs bg-brand-600 text-white rounded-button px-3 py-1.5 font-medium hover:bg-brand-700 transition disabled:opacity-40 flex items-center gap-1"
                     >
-                      {uploading ? 'Subiendo...' : '📎 Subir comprobante'}
+                      <Icon name="attach_file" size={14} />
+                      {uploading ? 'Subiendo...' : 'Subir comprobante'}
                     </button>
                     <button
                       onClick={() => handleCompletar(n)}
                       disabled={uploading}
-                      className="text-xs border border-gray-300 text-gray-600 rounded-lg px-3 py-1.5 hover:bg-gray-50 transition disabled:opacity-40"
+                      className="text-xs border border-gray-300 text-gray-600 rounded-button px-3 py-1.5 hover:bg-gray-50 transition disabled:opacity-40"
                     >
                       Omitir
                     </button>

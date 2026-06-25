@@ -4,6 +4,9 @@ import { SUBSIDIOS } from '../data/subsidiosCatalogo'
 import { calcularMatch } from '../utils/calcularMatch'
 import SubsidioCard from '../components/SubsidioCard'
 import BottomNav from '../components/BottomNav'
+import Icon from '../components/ui/Icon'
+import TourSpotlight from '../components/TourSpotlight'
+
 
 export default function SubsidiosPage() {
   const { profile, loading: loadingProfile } = useProfile()
@@ -14,7 +17,7 @@ export default function SubsidiosPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <p className="text-emerald-600 font-medium">Calculando matches...</p>
+        <p className="text-brand-600 font-medium">Calculando matches...</p>
       </div>
     )
   }
@@ -37,12 +40,14 @@ export default function SubsidiosPage() {
           </p>
         </div>
 
-        <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-4 mb-5">
-          <p className="text-sm text-emerald-800">
-            💡 Sube más documentos en <span className="font-semibold">Mis papeles</span> para aumentar tu match
+        <div className="bg-brand-50 border border-brand-200 rounded-card p-4 mb-5 flex items-start gap-2">
+          <Icon name="lightbulb" size={18} className="text-brand-600 shrink-0 mt-0.5" />
+          <p className="text-sm text-brand-700">
+            Sube más documentos en <span className="font-semibold">Mis papeles</span> para aumentar tu match
           </p>
         </div>
-
+        
+      <div id="tour-target-lista-subsidios">
         {subsidiosOrdenados.map((subsidio) => (
           <SubsidioCard
             key={subsidio.id}
@@ -51,9 +56,11 @@ export default function SubsidiosPage() {
             documentos={documentos}
           />
         ))}
+        </div>
 
       </div>
       <BottomNav />
+      <TourSpotlight rutaActual="/subsidios" />
     </div>
   )
 }

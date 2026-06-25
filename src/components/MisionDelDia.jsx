@@ -2,7 +2,7 @@ export default function MisionDelDia({ docsSubidos = 0, docsTotales = 10 }) {
   const porcentaje = Math.round((docsSubidos / docsTotales) * 100)
 
   return (
-    <div className="bg-emerald-600 rounded-2xl p-5 text-white mb-5">
+    <div className="bg-brand-600 rounded-card p-5 text-white mb-5">
       <p className="text-xs font-medium opacity-80 mb-1">Tu misión de hoy</p>
       <p className="text-base font-semibold mb-3">
         Completa tu carpeta antes de la emergencia
