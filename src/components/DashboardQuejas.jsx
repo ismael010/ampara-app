@@ -1,5 +1,6 @@
 import { CATEGORIAS_QUEJA, ESTADOS_QUEJA } from '../data/quejasCatalogo'
 import Icon from './ui/Icon'
+import DonutCategorias from './DonutCategorias'
 
 export default function DashboardQuejas({ stats }) {
   const { total, porCategoria, porEstado, zonasOrdenadas, pctResueltas } = stats
@@ -48,28 +49,15 @@ export default function DashboardQuejas({ stats }) {
       </div>
 
       {/* Por categoría */}
-      <div className="bg-white rounded-card shadow-sm p-4">
-        <p className="text-xs font-bold text-gray-600 mb-3">Por categoría</p>
-        <div className="space-y-2">
-          {CATEGORIAS_QUEJA.map(({ id, label, icono }) => {
-            const cantidad = porCategoria[id] || 0
-            if (cantidad === 0) return null
-            return (
-              <div key={id} className="flex items-center gap-2">
-                <Icon name={icono} size={14} className="text-brand-600 shrink-0" />
-                <p className="text-xs text-gray-600 w-24 shrink-0 truncate">{label}</p>
-                <div className="flex-1 bg-gray-100 rounded-full h-2">
-                  <div
-                    className="bg-brand-600 rounded-full h-2"
-                    style={{ width: `${(cantidad / maxCategoria) * 100}%` }}
-                  />
-                </div>
-                <span className="text-xs font-bold text-gray-700 w-4 text-right">{cantidad}</span>
-              </div>
-            )
-          })}
-        </div>
-      </div>
+<div className="bg-white rounded-card shadow-sm p-4">
+  <p className="text-xs font-bold text-gray-600 mb-3">Por categoría</p>
+  <DonutCategorias
+    datos={CATEGORIAS_QUEJA
+      .map(({ id, label }) => ({ label, cantidad: porCategoria[id] || 0 }))
+      .filter((d) => d.cantidad > 0)}
+    total={total}
+  />
+</div>
 
       {/* Por localidad/zona */}
       <div className="bg-white rounded-card shadow-sm p-4">

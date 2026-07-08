@@ -2,6 +2,7 @@ import { useMemo } from 'react'
 import { useQuejasEmpresa } from '../hooks/useQuejas'
 import { CATEGORIAS_QUEJA } from '../data/quejasCatalogo'
 import QuejaCard from '../components/QuejaCard'
+import DonutCategorias from '../components/DonutCategorias'
 import BottomNavESG from '../components/BottomNavESG'
 import Icon from '../components/ui/Icon'
 
@@ -15,8 +16,6 @@ export default function QuejasPage() {
     })
     return conteo
   }, [quejas])
-
-  const maxConteo = Math.max(1, ...Object.values(conteoPorCategoria))
 
   if (loading) {
     return (
@@ -38,25 +37,12 @@ export default function QuejasPage() {
         {quejas.length > 0 && (
           <div className="bg-white rounded-card shadow-sm p-4 mb-5">
             <p className="text-xs font-bold text-gray-600 mb-3">Por categoría</p>
-            <div className="space-y-2">
-              {CATEGORIAS_QUEJA.map(({ id, label, icono }) => {
-                const cantidad = conteoPorCategoria[id] || 0
-                if (cantidad === 0) return null
-                return (
-                  <div key={id} className="flex items-center gap-2">
-                    <Icon name={icono} size={14} className="text-brand-600 shrink-0" />
-                    <p className="text-xs text-gray-600 w-20 shrink-0">{label}</p>
-                    <div className="flex-1 bg-gray-100 rounded-full h-2">
-                      <div
-                        className="bg-brand-600 rounded-full h-2"
-                        style={{ width: `${(cantidad / maxConteo) * 100}%` }}
-                      />
-                    </div>
-                    <span className="text-xs font-bold text-gray-700 w-4 text-right">{cantidad}</span>
-                  </div>
-                )
-              })}
-            </div>
+            <DonutCategorias
+              datos={CATEGORIAS_QUEJA
+                .map(({ id, label }) => ({ label, cantidad: conteoPorCategoria[id] || 0 }))
+                .filter((d) => d.cantidad > 0)}
+              total={quejas.length}
+            />
           </div>
         )}
 

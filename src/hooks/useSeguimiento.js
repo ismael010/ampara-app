@@ -3,7 +3,6 @@ import { collection, onSnapshot, doc, setDoc, updateDoc } from 'firebase/firesto
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { db, storage } from '../firebase/config'
 import { useAuthContext } from '../context/AuthContext'
-import { sumarFichas } from '../utils/fichas'
 
 export function useSeguimiento() {
   const { user } = useAuthContext()
@@ -47,9 +46,6 @@ export function useSeguimiento() {
       [`etapas.${numeroEtapa}`]: { completada: true, comprobante: comprobanteUrl },
       etapaActual: numeroEtapa + 1,
     })
-
-    // 20 fichas por etapa completada
-    await sumarFichas(user.uid, 20)
   }
 
   return { seguimientos, loading, iniciarSeguimiento, completarEtapa }
