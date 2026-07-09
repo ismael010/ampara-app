@@ -1,12 +1,11 @@
 import { useNavigate } from 'react-router-dom'
 import Icon from './ui/Icon'
 
-export default function AccesoSeguimiento() {
+export default function AccesoSeguimiento({ id }) {
   const navigate = useNavigate()
-
   return (
     <button
-      id="tour-target-seguimiento"
+      id={id}
       onClick={() => navigate('/seguimiento')}
       className="w-full bg-white rounded-card shadow-sm p-4 mb-3 flex items-center gap-3 text-left border border-gray-100 hover:border-brand-200 transition"
     >

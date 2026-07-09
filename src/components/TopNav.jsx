@@ -1,7 +1,7 @@
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useAuthContext } from '../context/AuthContext'
 import Icon from './ui/Icon'
-import logo from '../assets/logo2.png'
+import logo from '../assets/logo1.png'
 
 const itemsPorRol = {
   familia: [
@@ -13,9 +13,9 @@ const itemsPorRol = {
     { label: 'Asistente',   icon: 'smart_toy',        ruta: '/asistente' },
   ],
   proveedor: [
-    { label: 'Inicio',    icon: 'home',        ruta: '/home' },
-    { label: 'Catálogo',  icon: 'inventory_2', ruta: '/mi-catalogo' },
-    { label: 'Leads',     icon: 'group',       ruta: '/leads' },
+    { label: 'Inicio',   icon: 'home',        ruta: '/home' },
+    { label: 'Catálogo', icon: 'inventory_2', ruta: '/mi-catalogo' },
+    { label: 'Leads',    icon: 'group',       ruta: '/leads' },
   ],
   ep: [
     { label: 'Inicio',      icon: 'home',       ruta: '/home' },
@@ -43,7 +43,7 @@ export default function TopNav() {
       <img
         src={logo}
         alt="Ampara"
-        className="h-8 cursor-pointer"
+        className="h-9 w-auto cursor-pointer"
         onClick={() => navigate('/home')}
       />
 

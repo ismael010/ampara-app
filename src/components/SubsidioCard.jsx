@@ -9,6 +9,16 @@ const NOMBRES_DOC = Object.fromEntries(
   CATALOGO.flatMap((c) => c.docs).map((d) => [d.id, d.nombre])
 )
 
+const NOMBRES_CAMPO = {
+  vivienda:    'Situación de vivienda',
+  danio:       'Daño en vivienda',
+  ingresos:    'Nivel de ingresos',
+  edad:        'Rango de edad',
+  convivencia: 'Convivencia',
+  educacion:   'Nivel de educación',
+  region:      'Región',
+}
+
 export default function SubsidioCard({ subsidio, perfil, documentos }) {
   const [abierto, setAbierto] = useState(false)
   const [iniciando, setIniciando] = useState(false)
@@ -33,7 +43,7 @@ export default function SubsidioCard({ subsidio, perfil, documentos }) {
   return (
     <div className="bg-white rounded-card shadow-sm mb-2 overflow-hidden">
 
-      {/* Header siempre visible — clickeable para expandir */}
+      {/* Header siempre visible */}
       <button
         onClick={() => setAbierto(!abierto)}
         className="w-full p-3 flex items-center justify-between text-left"
@@ -65,6 +75,7 @@ export default function SubsidioCard({ subsidio, perfil, documentos }) {
 
           <p className="text-xs text-gray-500 mb-3">{subsidio.descripcion}</p>
 
+          {/* Documentos requeridos */}
           <div className="flex flex-wrap gap-1 mb-3">
             {subsidio.requisitosDoc.map((docId) => {
               const ok = documentos[docId]?.subido
@@ -82,6 +93,7 @@ export default function SubsidioCard({ subsidio, perfil, documentos }) {
             })}
           </div>
 
+          {/* Qué falta */}
           {faltantes.length > 0 && (
             <div className="bg-warning-50 rounded-card p-3 mb-3">
               <p className="text-xs text-warning-700 font-medium mb-1.5">
@@ -89,8 +101,18 @@ export default function SubsidioCard({ subsidio, perfil, documentos }) {
               </p>
               <div className="flex flex-wrap gap-1">
                 {faltantes.map((f, i) => (
-                  <span key={i} className="text-xs text-warning-700 bg-warning-100 rounded-full px-2 py-0.5">
-                    {f.tipo === 'doc' ? NOMBRES_DOC[f.id] || f.id : 'Perfil'}
+                  <span
+                    key={i}
+                    className="text-xs text-warning-700 bg-warning-100 rounded-full px-2 py-0.5 flex items-center gap-1"
+                  >
+                    <Icon
+                      name={f.tipo === 'doc' ? 'description' : 'person'}
+                      size={10}
+                    />
+                    {f.tipo === 'doc'
+                      ? NOMBRES_DOC[f.id] || f.id
+                      : NOMBRES_CAMPO[f.id] || f.id
+                    }
                   </span>
                 ))}
               </div>
@@ -152,7 +174,6 @@ export default function SubsidioCard({ subsidio, perfil, documentos }) {
               </>
             )}
           </button>
-
         </div>
       )}
     </div>

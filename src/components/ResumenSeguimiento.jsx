@@ -2,18 +2,16 @@ import { useNavigate } from 'react-router-dom'
 import { ETAPAS } from '../data/etapasCatalogo'
 import Icon from './ui/Icon'
 
-export default function ResumenSeguimiento({ seguimientos }) {
+export default function ResumenSeguimiento({ seguimientos, id }) {
   const navigate = useNavigate()
-
   if (!seguimientos || seguimientos.length === 0) return null
 
-  // Toma la postulación con la etapa más avanzada
   const activa = [...seguimientos].sort((a, b) => b.etapaActual - a.etapaActual)[0]
   const etapaInfo = ETAPAS.find((e) => e.n === Math.min(activa.etapaActual, 5))
 
   return (
     <button
-      id="tour-target-seguimiento"
+      id={id}
       onClick={() => navigate('/seguimiento')}
       className="w-full bg-white rounded-card shadow-sm p-4 mb-3 flex items-center gap-3 text-left border border-gray-100 hover:border-brand-200 transition"
     >
